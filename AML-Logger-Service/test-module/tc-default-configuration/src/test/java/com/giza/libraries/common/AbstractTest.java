@@ -25,7 +25,6 @@ public abstract class AbstractTest {
     protected MockMvc mvc;
 
     protected void setUp() {
-        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     protected MvcResult prepareRequest(String url, Map<String, String> headers, MediaType contentType,
@@ -36,15 +35,7 @@ public abstract class AbstractTest {
         for(String header: headers.keySet())
             builder = builder.header(header, headers.get(header));
 
+        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         return mvc.perform(builder).andReturn();
-    }
-
-    protected Map<String, String> getHeaders(){
-        Map<String, String> headers = new HashMap<>();
-        headers.put(HttpHeaders.MODULE_ID.value(), "User-Module");
-        headers.put(HttpHeaders.REQUEST_LANGUAGE.value(), "en");
-        headers.put(HttpHeaders.AUTHORIZATION.value(), "Bearer UE9YaHJoWkJUR1FyZHRMRDArVXpNeWlhVGZCMlJsQ095MHF0QTJyckRubz06aW5zdHJ1Y3Rvcl8wMzE1NTkyOToxNTkzNzg0Nzg4NjAz");
-
-        return headers;
     }
 }

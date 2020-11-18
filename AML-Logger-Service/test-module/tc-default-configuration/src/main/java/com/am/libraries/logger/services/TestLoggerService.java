@@ -1,4 +1,4 @@
-package com.giza.libraries.testSamples.services;
+package com.am.libraries.logger.services;
 
 import com.am.libraries.logger.model.annotations.LogInputOutput;
 import com.am.libraries.logger.model.data.AppSession;
@@ -32,6 +32,7 @@ public class TestLoggerService {
         return arg3;
     }
 
+    @LogInputOutput
     public String testLogInfo(String arg1, String arg2) {
         String arg3 = arg1 + " " + arg2;
 
@@ -40,6 +41,7 @@ public class TestLoggerService {
         return arg1;
     }
 
+    @LogInputOutput
     public String testLogArguments(String arg1, String arg2) {
         String arg3 = arg1 + " " + arg2;
         String arg4 = arg1 + "-" + arg2;
@@ -58,6 +60,7 @@ public class TestLoggerService {
         return arg3;
     }
 
+    @LogInputOutput
     public String testLogError(String arg1, String arg2) {
         String arg3 = arg1 + " " + arg2;
 
