@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource("classpath:application.properties")
 public class LoggerConfigManager {
-    @Value("${gs-lib.logger.useDefaultLogger: #{true}}")
+    @Value("${aml.logger.useDefaultLogger: #{true}}")
     private Boolean useDefaultLogger;
 
-    @Value("${gs-lib.logger.defaultLoggerName: #{'Service-Logger'}}")
+    @Value("${aml.logger.defaultLoggerName: #{'Service-Logger'}}")
     private String defaultLoggerName;
 
-    @Value("${gs-lib.logger.logRESTRequests: #{false}}")
+    @Value("${aml.logger.logRESTRequests: #{false}}")
     private Boolean logRESTRequests;
 
     public Boolean getIsUseDefaultLogger() {
@@ -33,7 +33,6 @@ public class LoggerConfigManager {
     public Boolean getLogRESTRequests() {
         return logRESTRequests;
     }
-
     public void setLogRESTRequests(Boolean logRESTRequests) {
         this.logRESTRequests = logRESTRequests;
     }

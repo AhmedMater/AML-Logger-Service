@@ -1,6 +1,6 @@
 package com.am.libraries.logger.service;
 
-import com.giza.libraries.common.model.enums.HttpHeaders;
+import com.am.libraries.logger.model.enums.HttpHeaders;
 import com.am.libraries.logger.model.data.AppSession;
 import com.am.libraries.logger.model.data.AuthorizedUser;
 import com.am.libraries.logger.model.enums.Source;
