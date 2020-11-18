@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.HashMap;
@@ -27,9 +28,10 @@ public abstract class AbstractTest {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
-    protected MvcResult prepareRequest(String url, Map<String, String> headers, MediaType contentType) throws Exception {
+    protected MvcResult prepareRequest(String url, Map<String, String> headers, MediaType contentType,
+                                       MultiValueMap<String, String> queryParameters) throws Exception {
         MockHttpServletRequestBuilder builder  = MockMvcRequestBuilders.get(url)
-                .contentType(contentType);
+                .contentType(contentType).params(queryParameters);
 
         for(String header: headers.keySet())
             builder = builder.header(header, headers.get(header));

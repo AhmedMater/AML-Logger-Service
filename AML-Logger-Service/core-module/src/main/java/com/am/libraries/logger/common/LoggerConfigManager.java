@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource("classpath:application.properties")
 public class LoggerConfigManager {
-    @Value("${aml.logger.useDefaultLogger: #{true}}")
+    @Value("${aml.logger.useDefaultLogger:#{true}}")
     private Boolean useDefaultLogger;
 
-    @Value("${aml.logger.defaultLoggerName: #{'Service-Logger'}}")
+    @Value("${aml.logger.defaultLoggerName:#{'Service-Logger'}}")
     private String defaultLoggerName;
 
-    @Value("${aml.logger.logRESTRequests: #{false}}")
+    @Value("${aml.logger.logRESTRequests:#{false}}")
     private Boolean logRESTRequests;
 
     public Boolean getIsUseDefaultLogger() {

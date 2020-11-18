@@ -4,14 +4,13 @@ import com.am.libraries.logger.model.annotations.LogInputOutput;
 import com.am.libraries.logger.model.data.AppSession;
 import com.am.libraries.logger.service.AbstractLogger;
 import com.am.libraries.logger.service.logger.LoggerService;
-import com.giza.libraries.testSamples.libraries.logger.UserLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import java.util.Map;
 @Service
 public class TestLoggerService {
     private AbstractLogger logger;
-    private UserLogger logger1;
 
     @Autowired
     public TestLoggerService(LoggerService logger) {
@@ -27,7 +25,7 @@ public class TestLoggerService {
     }
 
     @LogInputOutput
-    public String testLogInputOutput(String arg1, String arg2){
+    public String testLogInputOutput(String arg1, String arg2) {
         String arg3 = arg1 + " " + arg2;
         String arg4 = arg1 + "-" + arg2;
 
@@ -38,7 +36,7 @@ public class TestLoggerService {
         String arg3 = arg1 + " " + arg2;
 
         this.logger.info("Logic is executed successfully");
-        this.logger.info("Concating 2 Strings {0}, {1} is executed successfully", arg1, arg2);
+        this.logger.info("Concatenating 2 Strings {0}, {1} is executed successfully", arg1, arg2);
         return arg1;
     }
 
@@ -47,7 +45,7 @@ public class TestLoggerService {
         String arg4 = arg1 + "-" + arg2;
         String arg5 = arg1 + "_" + arg2;
 
-        Map<String, Object> arguments = new HashMap<String, Object>(){{
+        Map<String, Object> arguments = new HashMap<String, Object>() {{
             put("Argument 3", arg3);
             put("Argument 4", arg4);
             put("Argument 5", arg5);
@@ -63,24 +61,23 @@ public class TestLoggerService {
     public String testLogError(String arg1, String arg2) {
         String arg3 = arg1 + " " + arg2;
 
-        try{
+        try {
             throw new Exception("Failed to continue Logic");
-        } catch (Exception ex){
+        } catch (Exception ex) {
             this.logger.error("Logic failed to execute");
-            this.logger.error("Logic of Concating 2 Strings {0}, {1} failed to execute", arg1, arg2);
+            this.logger.error("Logic of Concatenating 2 Strings {0}, {1} failed to execute", arg1, arg2);
             this.logger.error(ex, "Logic failed to execute");
-            this.logger.error(ex,"Logic of Concating 2 Strings {0}, {1} failed to execute", arg1, arg2);
+            this.logger.error(ex, "Logic of Concatenating 2 Strings {0}, {1} failed to execute", arg1, arg2);
         }
 
         return arg3;
     }
 
+    public String getAppSession(String arg1, String arg2) {
+//        RequestAttributes reqAttributes = RequestContextHolder.getRequestAttributes();
+//        HttpServletRequest request = ((ServletRequestAttributes) reqAttributes).getRequest();
+//        AppSession session = (AppSession) request.getAttribute(AppSession.REST_SESSION);
 
-public String getAppSession(String arg1, String arg2){
-    RequestAttributes reqAttributes = RequestContextHolder.getRequestAttributes();
-    HttpServletRequest request = ((ServletRequestAttributes) reqAttributes).getRequest();
-    AppSession session = (AppSession) request.getAttribute(AppSession.REST_SESSION);
-
-    return arg1;
-}
+        return arg1;
+    }
 }

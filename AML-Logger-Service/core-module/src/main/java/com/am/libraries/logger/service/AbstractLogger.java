@@ -25,13 +25,13 @@ public abstract class AbstractLogger {
         if(loggerName == null || loggerName.trim().equals(""))
             throw new IllegalArgumentException("Invalid Logger Name");
 
-        this.logger = LogManager.getLogger(loggerName);
+        this.logger = LogManager.getLogger(loggerName.trim());
     }
     public AbstractLogger(String loggerName){
         if(loggerName == null || loggerName.trim().equals(""))
             throw new IllegalArgumentException("Invalid Logger Name");
 
-        this.logger = LogManager.getLogger(loggerName);
+        this.logger = LogManager.getLogger(loggerName.trim());
     }
 
     public void pushSignature(Class clazz, String fnName){
