@@ -1,0 +1,37 @@
+<Configuration>
+    <Properties>
+        <Property name="DEFAULT_LOG_NAME">Service</Property>
+        <Property name="LOGS_PATH">../logs</Property>
+        <Property name="LOG_FILE_SIZE">10MB</Property>
+        <Property name="LOG_PATTERN">[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5p] [%t] %m %n</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <RollingFile name="${DEFAULT_LOG_NAME}-Appender" fileName="${LOGS_PATH}/${DEFAULT_LOG_NAME}.log"
+                     filePattern="${LOGS_PATH}/_${DEFAULT_LOG_NAME}-Archived/${DEFAULT_LOG_NAME}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${LOG_FILE_SIZE}" />
+            </Policies>
+
+            <DefaultRolloverStrategy max="50"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="${DEFAULT_LOG_NAME}-Logger" level="DEBUG">
+            <AppenderRef ref="${DEFAULT_LOG_NAME}-Appender"/>
+        </Logger>
+
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
+
+
