@@ -1,7 +1,7 @@
 package com.am.libraries.logger.aspect;
 
-import com.am.libraries.logger.model.enums.HttpHeaders;
 import com.am.libraries.logger.model.data.AppSession;
+import com.am.libraries.logger.model.enums.HttpHeaders;
 import com.am.libraries.logger.model.enums.Source;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

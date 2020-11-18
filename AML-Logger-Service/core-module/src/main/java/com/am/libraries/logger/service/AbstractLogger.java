@@ -1,10 +1,10 @@
 package com.am.libraries.logger.service;
 
-import com.am.libraries.logger.model.enums.HttpHeaders;
 import com.am.libraries.logger.model.data.AppSession;
 import com.am.libraries.logger.model.data.AuthorizedUser;
-import com.am.libraries.logger.model.enums.Source;
 import com.am.libraries.logger.model.data.ILogCategories;
+import com.am.libraries.logger.model.enums.HttpHeaders;
+import com.am.libraries.logger.model.enums.Source;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.context.request.RequestAttributes;

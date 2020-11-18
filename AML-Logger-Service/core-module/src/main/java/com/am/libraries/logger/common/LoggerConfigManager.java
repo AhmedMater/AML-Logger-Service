@@ -33,6 +33,7 @@ public class LoggerConfigManager {
     public Boolean getLogRESTRequests() {
         return logRESTRequests;
     }
+
     public void setLogRESTRequests(Boolean logRESTRequests) {
         this.logRESTRequests = logRESTRequests;
     }
