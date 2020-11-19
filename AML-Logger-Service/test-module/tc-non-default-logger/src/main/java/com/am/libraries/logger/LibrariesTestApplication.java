@@ -1,4 +1,4 @@
-package com.giza.libraries.testSamples;
+package com.am.libraries.logger;
 
 import com.am.libraries.logger.configuration.EnableLogging;
 import org.springframework.boot.SpringApplication;

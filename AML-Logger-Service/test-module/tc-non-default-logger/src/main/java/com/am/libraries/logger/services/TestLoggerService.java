@@ -1,10 +1,10 @@
-package com.giza.libraries.testSamples.services;
+package com.am.libraries.logger.services;
 
+import com.am.libraries.logger.libraries.logger.UserLogger;
 import com.am.libraries.logger.model.annotations.LogInputOutput;
 import com.am.libraries.logger.model.data.AppSession;
 import com.am.libraries.logger.service.AbstractLogger;
 import com.am.libraries.logger.service.logger.LoggerService;
-import com.giza.libraries.testSamples.libraries.logger.UserLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;

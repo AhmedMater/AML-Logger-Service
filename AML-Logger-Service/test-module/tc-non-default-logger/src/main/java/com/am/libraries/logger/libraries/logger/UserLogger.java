@@ -1,4 +1,4 @@
-package com.giza.libraries.testSamples.libraries.logger;
+package com.am.libraries.logger.libraries.logger;
 
 import com.am.libraries.logger.service.RESTLogger;
 import org.springframework.stereotype.Service;

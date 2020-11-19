@@ -1,6 +1,6 @@
-package com.giza.libraries.testSamples.controller;
+package com.am.libraries.logger.controller;
 
-import com.giza.libraries.testSamples.services.TestLoggerService;
+import com.am.libraries.logger.services.TestLoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

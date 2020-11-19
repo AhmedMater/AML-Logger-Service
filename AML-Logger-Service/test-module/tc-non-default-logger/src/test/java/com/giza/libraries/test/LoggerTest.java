@@ -1,7 +1,7 @@
 package com.giza.libraries.test;
 
 import com.giza.libraries.common.AbstractTest;
-import com.giza.libraries.testSamples.LibrariesTestApplication;
+import com.am.libraries.logger.LibrariesTestApplication;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
