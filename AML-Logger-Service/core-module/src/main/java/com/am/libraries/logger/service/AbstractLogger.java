@@ -143,7 +143,7 @@ public abstract class AbstractLogger {
 
             message = new StringBuilder("Started with input: [" + message.toString() + "]");
         } else {
-            message.append("Started");
+            message.append("Started With no inputs");
         }
 
         logger.debug(preLogString + message.toString());
@@ -164,7 +164,7 @@ public abstract class AbstractLogger {
         if(isOutputProvided)
             logger.debug(preLogString + "Ended successfully with result: [" + value + "]");
         else
-            logger.debug(preLogString + "Ended successfully");
+            logger.debug(preLogString + "Ended successfully with no result");
 
     }
     public void endDebug(Object obj) {

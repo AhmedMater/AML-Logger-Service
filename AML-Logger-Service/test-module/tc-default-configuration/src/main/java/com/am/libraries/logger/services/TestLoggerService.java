@@ -1,5 +1,7 @@
 package com.am.libraries.logger.services;
 
+import com.am.libraries.logger.model.Data;
+import com.am.libraries.logger.model.ResponseData;
 import com.am.libraries.logger.model.annotations.LogInputOutput;
 import com.am.libraries.logger.model.data.AppSession;
 import com.am.libraries.logger.service.AbstractLogger;
@@ -25,7 +27,7 @@ public class TestLoggerService {
     }
 
     @LogInputOutput
-    public String testLogInputOutput(String arg1, String arg2) {
+    public String logStrInputStrOutput(String arg1, String arg2) {
         String arg3 = arg1 + " " + arg2;
         String arg4 = arg1 + "-" + arg2;
 
@@ -82,5 +84,51 @@ public class TestLoggerService {
 //        AppSession session = (AppSession) request.getAttribute(AppSession.REST_SESSION);
 
         return arg1;
+    }
+
+    @LogInputOutput
+    public void logNoInputNoOutput() {
+
+    }
+
+    @LogInputOutput
+    public void logStrInputNoOutput(String param1, String param2) {
+
+    }
+
+    @LogInputOutput
+    public String logNoInputStrOutput() {
+        return "Output Only";
+    }
+
+    @LogInputOutput
+    public ResponseData logStrInputObjOutput(String param1, String param2) {
+        ResponseData data = new ResponseData();
+        data.setResult(param1 + "-" + param2);
+        return data;
+    }
+
+    @LogInputOutput
+    public String logObjInputStrOutput(Data data) {
+        return data.getFirstName() + "-" + data.getLastName();
+    }
+
+    @LogInputOutput
+    public ResponseData logObjInputObjOutput(Data data) {
+        ResponseData responseData = new ResponseData();
+        responseData.setResult(data.getFirstName() + "-" + data.getLastName());
+        return responseData;
+    }
+
+    @LogInputOutput
+    public ResponseData logNoInputObjOutput() {
+        ResponseData responseData = new ResponseData();
+        responseData.setResult("Output Only");
+        return responseData;
+    }
+
+    @LogInputOutput
+    public void logObjInputNoOutput(Data data) {
+
     }
 }

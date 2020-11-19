@@ -1,5 +1,6 @@
 package com.giza.libraries.test;
 
+import com.am.libraries.logger.model.Data;
 import com.giza.libraries.common.AbstractTest;
 import com.giza.libraries.common.HttpHeaders;
 import com.am.libraries.logger.DefaultLoggerApplication;
@@ -83,24 +84,23 @@ public class LoggerTest extends AbstractTest {
             Assert.fail(assertErrorMessage);
     }
 
-
     @Test
-    public void testLogInputOutput() throws Exception {
-        String uri = "/logger/log/inputOutput";
+    public void testLogStrInput_StrOutput() throws Exception {
+        String uri = "/logger/log/strInputStrOutput";
 
         MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
         queryParameters.put("param1", Collections.singletonList("Ahmed"));
         queryParameters.put("param2", Collections.singletonList("Mater"));
 
         Map<String, String> headers = getHeaders();
-        headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-1");
+        headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-10");
 
-        MvcResult mvcResult = this.prepareRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
+        MvcResult mvcResult = this.prepareGETRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
         int status = mvcResult.getResponse().getStatus();
         Assert.assertEquals("REST Request isn't successfully", 200, status);
 
-        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] \\[en] \\[Test-Module] \\[ReqID-1] " +
-                "\\[com\\.am\\.libraries\\.logger\\.services\\.TestLoggerService\\.testLogInputOutput\\(\\)] ";
+        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] \\[en] \\[Test-Module] \\[ReqID-10] " +
+                "\\[com\\.am\\.libraries\\.logger\\.services\\.TestLoggerService\\.logStrInputStrOutput\\(\\)] ";
 
         String inputLogLineStr = logPrefix + "Started with input: \\[Ahmed, Mater]";
         String outputLogLineStr = logPrefix + "Ended successfully with result: \\[Ahmed Mater]";
@@ -108,11 +108,230 @@ public class LoggerTest extends AbstractTest {
         this.readLogFile();
 
         Thread.sleep(1000);
-//        Assert.assertEquals("No Log Lines read from the Log File", 2, this.logLines.size());
-//        Assert.assertTrue("Input Log Line doesn't match, Actual Value: " + this.logLines.get(0),
-//                this.logLines.get(0).trim().matches(inputLogLineStr));
-//        Assert.assertTrue("Output Log Line doesn't match, Actual Value: " + this.logLines.get(1),
-//                this.logLines.get(1).trim().matches(outputLogLineStr));
+        this.checkIfMessageExist(inputLogLineStr, "Input Debug Log Line doesn't match any line");
+        this.checkIfMessageExist(outputLogLineStr, "Output Debug Log Line doesn't match any line");
+    }
+
+    @Test
+    public void testLogNoInput_StrOutput() throws Exception {
+        String uri = "/logger/log/noInputStrOutput";
+
+        MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
+
+        Map<String, String> headers = getHeaders();
+        headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-11");
+
+        MvcResult mvcResult = this.prepareGETRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals("REST Request isn't successfully", 200, status);
+
+        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] \\[en] \\[Test-Module] \\[ReqID-11] " +
+                "\\[com\\.am\\.libraries\\.logger\\.services\\.TestLoggerService\\.logNoInputStrOutput\\(\\)] ";
+
+        String inputLogLineStr = logPrefix + "Started With no inputs";
+        String outputLogLineStr = logPrefix + "Ended successfully with result: \\[Output Only]";
+
+        this.readLogFile();
+
+        Thread.sleep(1000);
+        this.checkIfMessageExist(inputLogLineStr, "Input Debug Log Line doesn't match any line");
+        this.checkIfMessageExist(outputLogLineStr, "Output Debug Log Line doesn't match any line");
+    }
+
+    @Test
+    public void testLogStrInput_NoOutput() throws Exception {
+        String uri = "/logger/log/strInputNoOutput";
+
+        MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
+        queryParameters.put("param1", Collections.singletonList("Ahmed"));
+        queryParameters.put("param2", Collections.singletonList("Mater"));
+
+        Map<String, String> headers = getHeaders();
+        headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-12");
+
+        MvcResult mvcResult = this.prepareGETRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals("REST Request isn't successfully", 204, status);
+
+        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] \\[en] \\[Test-Module] \\[ReqID-12] " +
+                "\\[com\\.am\\.libraries\\.logger\\.services\\.TestLoggerService\\.logStrInputNoOutput\\(\\)] ";
+
+        String inputLogLineStr = logPrefix + "Started with input: \\[Ahmed, Mater]";
+        String outputLogLineStr = logPrefix + "Ended successfully with no result";
+
+        this.readLogFile();
+
+        Thread.sleep(1000);
+        this.checkIfMessageExist(inputLogLineStr, "Input Debug Log Line doesn't match any line");
+        this.checkIfMessageExist(outputLogLineStr, "Output Debug Log Line doesn't match any line");
+    }
+
+    @Test
+    public void testLogNoInput_NoOutput() throws Exception {
+        String uri = "/logger/log/noInputNoOutput";
+
+        MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
+
+        Map<String, String> headers = getHeaders();
+        headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-1");
+
+        MvcResult mvcResult = this.prepareGETRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals("REST Request isn't successfully", 204, status);
+
+        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] \\[en] \\[Test-Module] \\[ReqID-1] " +
+                "\\[com\\.am\\.libraries\\.logger\\.services\\.TestLoggerService\\.logNoInputNoOutput\\(\\)] ";
+
+        String inputLogLineStr = logPrefix + "Started With no inputs";
+        String outputLogLineStr = logPrefix + "Ended successfully with no result";
+
+        this.readLogFile();
+
+        Thread.sleep(1000);
+        this.checkIfMessageExist(inputLogLineStr, "Input Debug Log Line doesn't match any line");
+        this.checkIfMessageExist(outputLogLineStr, "Output Debug Log Line doesn't match any line");
+    }
+
+    @Test
+    public void testLogObjInput_ObjOutput() throws Exception {
+        String uri = "/logger/log/objInputObjOutput";
+
+        Data data = new Data();
+        data.setFirstName("Ahmed");
+        data.setLastName("Mater");
+
+        Map<String, String> headers = getHeaders();
+        headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-14");
+
+        MvcResult mvcResult = this.preparePOSTRequest(uri, headers, MediaType.APPLICATION_JSON, data);
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals("REST Request isn't successfully", 200, status);
+
+        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] \\[en] \\[Test-Module] \\[ReqID-14] " +
+                "\\[com\\.am\\.libraries\\.logger\\.services\\.TestLoggerService\\.logObjInputObjOutput\\(\\)] ";
+
+        String inputLogLineStr = logPrefix + "Started with input: " +
+                "\\[Data\\{firstName='Ahmed', lastName='Mater'}]";
+        String outputLogLineStr = logPrefix + "Ended successfully with result: " +
+                "\\[ResponseData\\{result='Ahmed-Mater'}]";
+
+        this.readLogFile();
+
+        Thread.sleep(1000);
+        this.checkIfMessageExist(inputLogLineStr, "Input Debug Log Line doesn't match any line");
+        this.checkIfMessageExist(outputLogLineStr, "Output Debug Log Line doesn't match any line");
+    }
+
+    @Test
+    public void testLogNoInput_ObjOutput() throws Exception {
+        String uri = "/logger/log/noInputObjOutput";
+
+        MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
+
+        Map<String, String> headers = getHeaders();
+        headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-15");
+
+        MvcResult mvcResult = this.prepareGETRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals("REST Request isn't successfully", 200, status);
+
+        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] \\[en] \\[Test-Module] \\[ReqID-15] " +
+                "\\[com\\.am\\.libraries\\.logger\\.services\\.TestLoggerService\\.logNoInputObjOutput\\(\\)] ";
+
+        String inputLogLineStr = logPrefix + "Started With no inputs";
+        String outputLogLineStr = logPrefix + "Ended successfully with result: " +
+                "\\[ResponseData\\{result='Output Only'}]";
+
+        this.readLogFile();
+
+        Thread.sleep(1000);
+        this.checkIfMessageExist(inputLogLineStr, "Input Debug Log Line doesn't match any line");
+        this.checkIfMessageExist(outputLogLineStr, "Output Debug Log Line doesn't match any line");
+    }
+
+    @Test
+    public void testLogObjInput_NoOutput() throws Exception {
+        String uri = "/logger/log/objInputNoOutput";
+
+        Data data = new Data();
+        data.setFirstName("Ahmed");
+        data.setLastName("Mater");
+
+        Map<String, String> headers = getHeaders();
+        headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-16");
+
+        MvcResult mvcResult = this.preparePOSTRequest(uri, headers, MediaType.APPLICATION_JSON, data);
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals("REST Request isn't successfully", 204, status);
+
+        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] \\[en] \\[Test-Module] \\[ReqID-16] " +
+                "\\[com\\.am\\.libraries\\.logger\\.services\\.TestLoggerService\\.logObjInputNoOutput\\(\\)] ";
+
+        String inputLogLineStr = logPrefix + "Started with input: " +
+                "\\[Data\\{firstName='Ahmed', lastName='Mater'}]";
+        String outputLogLineStr = logPrefix + "Ended successfully with no result";
+
+        this.readLogFile();
+
+        Thread.sleep(1000);
+        this.checkIfMessageExist(inputLogLineStr, "Input Debug Log Line doesn't match any line");
+        this.checkIfMessageExist(outputLogLineStr, "Output Debug Log Line doesn't match any line");
+    }
+
+    @Test
+    public void testLogStrInput_ObjOutput() throws Exception {
+        String uri = "/logger/log/strInputObjOutput";
+
+        MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
+        queryParameters.put("param1", Collections.singletonList("Ahmed"));
+        queryParameters.put("param2", Collections.singletonList("Mater"));
+
+        Map<String, String> headers = getHeaders();
+        headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-17");
+
+        MvcResult mvcResult = this.prepareGETRequest(uri, headers, MediaType.APPLICATION_JSON, queryParameters);
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals("REST Request isn't successfully", 200, status);
+
+        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] \\[en] \\[Test-Module] \\[ReqID-17] " +
+                "\\[com\\.am\\.libraries\\.logger\\.services\\.TestLoggerService\\.logStrInputObjOutput\\(\\)] ";
+
+        String inputLogLineStr = logPrefix + "Started with input: \\[Ahmed, Mater]";
+        String outputLogLineStr = logPrefix + "Ended successfully with result: " +
+                "\\[ResponseData\\{result='Ahmed-Mater'}]";
+
+        this.readLogFile();
+
+        Thread.sleep(1000);
+        this.checkIfMessageExist(inputLogLineStr, "Input Debug Log Line doesn't match any line");
+        this.checkIfMessageExist(outputLogLineStr, "Output Debug Log Line doesn't match any line");
+    }
+
+    @Test
+    public void testLogObjInput_StrOutput() throws Exception {
+        String uri = "/logger/log/objInputStrOutput";
+
+        Data data = new Data();
+        data.setFirstName("Ahmed");
+        data.setLastName("Mater");
+
+        Map<String, String> headers = getHeaders();
+        headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-18");
+
+        MvcResult mvcResult = this.preparePOSTRequest(uri, headers, MediaType.APPLICATION_JSON, data);
+        int status = mvcResult.getResponse().getStatus();
+        Assert.assertEquals("REST Request isn't successfully", 200, status);
+
+        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] \\[en] \\[Test-Module] \\[ReqID-18] " +
+                "\\[com\\.am\\.libraries\\.logger\\.services\\.TestLoggerService\\.logObjInputStrOutput\\(\\)] ";
+
+        String inputLogLineStr = logPrefix + "Started with input: " +
+                "\\[Data\\{firstName='Ahmed', lastName='Mater'}]";
+        String outputLogLineStr = logPrefix + "Ended successfully with result: \\[Ahmed-Mater]";
+
+        this.readLogFile();
+
+        Thread.sleep(1000);
         this.checkIfMessageExist(inputLogLineStr, "Input Debug Log Line doesn't match any line");
         this.checkIfMessageExist(outputLogLineStr, "Output Debug Log Line doesn't match any line");
     }
@@ -128,7 +347,7 @@ public class LoggerTest extends AbstractTest {
         Map<String, String> headers = getHeaders();
         headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-2");
 
-        MvcResult mvcResult = this.prepareRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
+        MvcResult mvcResult = this.prepareGETRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
         int status = mvcResult.getResponse().getStatus();
         Assert.assertEquals("REST Request isn't successfully", 200, status);
 
@@ -161,7 +380,7 @@ public class LoggerTest extends AbstractTest {
         Map<String, String> headers = getHeaders();
         headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-3");
 
-        MvcResult mvcResult = this.prepareRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
+        MvcResult mvcResult = this.prepareGETRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
         int status = mvcResult.getResponse().getStatus();
         Assert.assertEquals("REST Request isn't successfully", 200, status);
 
@@ -195,7 +414,7 @@ public class LoggerTest extends AbstractTest {
         Map<String, String> headers = getHeaders();
         headers.put(HttpHeaders.REQUEST_ID.value(), "ReqID-4");
 
-        MvcResult mvcResult = this.prepareRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
+        MvcResult mvcResult = this.prepareGETRequest(uri, headers, MediaType.TEXT_PLAIN, queryParameters);
         int status = mvcResult.getResponse().getStatus();
         Assert.assertEquals("REST Request isn't successfully", 200, status);
 

@@ -1,5 +1,6 @@
 package com.giza.libraries.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -27,8 +28,8 @@ public abstract class AbstractTest {
     protected void setUp() {
     }
 
-    protected MvcResult prepareRequest(String url, Map<String, String> headers, MediaType contentType,
-                                       MultiValueMap<String, String> queryParameters) throws Exception {
+    protected MvcResult prepareGETRequest(String url, Map<String, String> headers, MediaType contentType,
+                                          MultiValueMap<String, String> queryParameters) throws Exception {
         MockHttpServletRequestBuilder builder  = MockMvcRequestBuilders.get(url)
                 .contentType(contentType).params(queryParameters);
 
@@ -37,5 +38,29 @@ public abstract class AbstractTest {
 
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         return mvc.perform(builder).andReturn();
+    }
+
+
+    protected MvcResult preparePOSTRequest(String url, Map<String, String> headers, MediaType contentType,
+                                          Object payload) throws Exception {
+        MockHttpServletRequestBuilder builder  = MockMvcRequestBuilders.post(url)
+                .contentType(contentType).content(asJsonString(payload));
+
+        for(String header: headers.keySet())
+            builder = builder.header(header, headers.get(header));
+
+        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        return mvc.perform(builder).andReturn();
+    }
+
+    private String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            final String jsonContent = mapper.writeValueAsString(obj);
+            System.out.println(jsonContent);
+            return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
