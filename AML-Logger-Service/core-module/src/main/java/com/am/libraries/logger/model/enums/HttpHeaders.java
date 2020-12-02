@@ -4,7 +4,9 @@ public enum HttpHeaders {
     REQUEST_ID("Request-ID"),
     REQUEST_LANGUAGE("Request-Language"),
     AUTHORIZATION("Authorization"),
-    MODULE_ID("Module-ID");
+    MODULE_ID("Module-ID"),
+    USER_ID("User-ID"),
+    USER_NAME("Username");
 
     private String name;
     HttpHeaders(String name){

@@ -48,13 +48,7 @@ public abstract class AbstractLogger {
             this.setAppSession(session);
         }
     }
-    public void setSessionCategory(ILogCategories category){
-        AppSession session = this.getAppSession();
-        if(session != null) {
-            session.setCategory(category);
-            this.setAppSession(session);
-        }
-    }
+
     public void addAttributeToSession(String key, Object value) {
         AppSession session = this.getAppSession();
         if(session != null) {

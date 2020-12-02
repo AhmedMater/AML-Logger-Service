@@ -9,7 +9,6 @@ public class AppSession implements Serializable {
     public static final String REST_SESSION = "App-Session";
 
     private AuthorizedUser user;
-    private String category;
     private String source;
     private String correlationID;
     private String currentLang;
@@ -17,29 +16,14 @@ public class AppSession implements Serializable {
     private String jmsDestinationName;
 
     private Stack<String> signatures = new Stack<>();
-    private Map<String, String> others = new HashMap<>();
+    private Map<String, String> others;
     
     private String logPrefix;
 
     public AppSession() {
     }
 
-    public AppSession(Source source) {
-        this(null, source, null, null, null);
-    }
-    public AppSession(ILogCategories category, Source source, String correlationID) {
-        this(category, source, correlationID, null, null);
-    }
-    public AppSession(Source source, String correlationID, AuthorizedUser user, String currentLang) {
-        this(null, source, correlationID, user, currentLang);
-    }
-
-    public AppSession(ILogCategories category, Source source) {
-        this(category, source, null, null, null);
-    }
-
-    public AppSession(ILogCategories category, Source source, String correlationID, AuthorizedUser currentUser, String currentLang) {
-        this.category = category != null ? category.value() : null;
+    public AppSession(Source source, String correlationID, AuthorizedUser currentUser, String currentLang) {
         this.source = source != null ? source.name() : null;
         this.user = currentUser;
         this.correlationID = correlationID;
@@ -48,8 +32,13 @@ public class AppSession implements Serializable {
     }
 
     public AppSession(Source source, String correlationID) {
-        this(null, source, correlationID, null, null);
+        this(source, correlationID, null, null);
     }
+
+    public AppSession(Source source) {
+        this(source, null, null, null);
+    }
+
 
     public String getSource() {
         return source;
@@ -70,17 +59,25 @@ public class AppSession implements Serializable {
         this.user = user;
         this.setLogPrefix();
     }
+
+    public String getUserID(){
+        if(this.user != null)
+            return this.user.getId();
+        else
+            return null;
+    }
     public void setUserID(String userID) {
         if(this.user == null)
             this.user = new AuthorizedUser();
-        this.user.setId(Long.parseLong(userID));
+        this.user.setId(userID);
         this.setLogPrefix();
     }
-    public void setUserFullName(String nameEN) {
-        if(this.user == null)
-            this.user = new AuthorizedUser();
-        this.user.setNameEN(nameEN);
-        this.setLogPrefix();
+
+    public String getUsername(){
+        if(this.user != null)
+            return this.user.getUsername();
+        else
+            return null;
     }
     public void setUsername(String username) {
         if(this.user == null)
@@ -88,28 +85,17 @@ public class AppSession implements Serializable {
         this.user.setUsername(username);
         this.setLogPrefix();
     }
-    public void setToken(String token) {
-        if(this.user == null)
-            this.user = new AuthorizedUser();
-        this.user.setToken(token);
-    }
+
     public String getToken(){
         if(this.user != null)
             return this.user.getToken();
         else
             return null;
     }
-
-    public String getCategory() {
-        return category;
-    }
-    public void setCategory(String category) {
-        this.category = category;
-        this.setLogPrefix();
-    }
-    public void setCategory(ILogCategories category) {
-        this.category = category.value();
-        this.setLogPrefix();
+    public void setToken(String token) {
+        if(this.user == null)
+            this.user = new AuthorizedUser();
+        this.user.setToken(token);
     }
 
     public String getCorrelationID() {
@@ -177,26 +163,37 @@ public class AppSession implements Serializable {
         if (this.getSource() != null)
             statements.add("[" + this.getSource() + "]");
 
+        if (this.getCorrelationID() != null)
+            statements.add("[" + this.getCorrelationID() + "]");
+
         if (this.getCurrentLang() != null)
             statements.add("[" + this.getCurrentLang() + "]");
 
         if (this.getModuleID() != null)
             statements.add("[" + this.getModuleID() + "]");
 
-        if (this.getCorrelationID() != null)
-            statements.add("[" + this.getCorrelationID() + "]");
+        if (this.getUser() != null){
+            List<String> userStatements = new ArrayList<>();
+
+            if(this.getUser().getId() != null)
+                userStatements.add(this.getUser().getId());
+
+            if(this.getUser().getUsername() != null)
+                userStatements.add(this.getUser().getUsername());
+
+            StringBuilder _fullStatement = new StringBuilder(userStatements.get(0));
+            for(int i=1; i<userStatements.size(); i++)
+                _fullStatement.append(" - ").append(userStatements.get(i));
+
+            statements.add("[" + _fullStatement.toString() + "]");
+        }
+
+        if(this.others != null)
+            for (String key : this.getOthers().keySet())
+                statements.add("[" + key + ": " + this.getOthers().get(key) + "]");
 
         if (this.getJmsDestinationName() != null)
             statements.add("[" + this.getJmsDestinationName() + "]");
-
-        if (this.getCategory() != null)
-            statements.add("[" + this.getCategory() + "]");
-
-        for (String key : this.getOthers().keySet())
-            statements.add("[" + key + ": " + this.getOthers().get(key) + "]");
-
-        if (this.getUser() != null && this.getUser().getId() != null)
-            statements.add("[" + this.getUser().getId() + " - " + this.getUser().getUsername() + " - " + this.getUser().getNameEN() + "]");
 
         if(this.signatures != null && this.signatures.size() != 0)
             statements.add("[" + this.signatures.peek() + "]");
@@ -212,7 +209,6 @@ public class AppSession implements Serializable {
     public String toString() {
         return "AppSession{" +
                 "user=" + user + "\n" +
-                ", category='" + category + "\'\n" +
                 ", source='" + source + "\'\n" +
                 ", correlationID='" + correlationID + "\'\n" +
                 ", currentLang='" + currentLang + "\'\n" +

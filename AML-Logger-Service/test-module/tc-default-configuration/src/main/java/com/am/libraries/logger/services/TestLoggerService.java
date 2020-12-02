@@ -78,12 +78,9 @@ public class TestLoggerService {
         return arg3;
     }
 
-    public String getAppSession(String arg1, String arg2) {
-//        RequestAttributes reqAttributes = RequestContextHolder.getRequestAttributes();
-//        HttpServletRequest request = ((ServletRequestAttributes) reqAttributes).getRequest();
-//        AppSession session = (AppSession) request.getAttribute(AppSession.REST_SESSION);
-
-        return arg1;
+    public AppSession getAppSession() {
+        AppSession session = this.logger.getAppSession();
+        return session;
     }
 
     @LogInputOutput
@@ -130,5 +127,10 @@ public class TestLoggerService {
     @LogInputOutput
     public void logObjInputNoOutput(Data data) {
 
+    }
+
+    @LogInputOutput
+    public void logHeaders() {
+        this.logger.info("Testing Headers changes");
     }
 }

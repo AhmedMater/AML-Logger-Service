@@ -1,5 +1,6 @@
 package com.am.libraries.logger.aspect;
 
+import com.am.libraries.logger.common.LoggerConfigManager;
 import com.am.libraries.logger.model.data.AppSession;
 import com.am.libraries.logger.model.enums.HttpHeaders;
 import com.am.libraries.logger.model.enums.Source;
@@ -19,6 +20,9 @@ import java.util.UUID;
 @Aspect
 @Component
 public class GenerateAppSessionAspect implements Ordered{
+
+    @Autowired(required = false)
+    private LoggerConfigManager loggerConfigManager;
 
     @Override
     public int getOrder() {
@@ -48,7 +52,7 @@ public class GenerateAppSessionAspect implements Ordered{
         String requestID = request.getHeader(HttpHeaders.REQUEST_ID.value());
         if(requestID != null && !requestID.trim().isEmpty())
             session.setCorrelationID(requestID);
-        else
+        else if(loggerConfigManager.getGenerateUUIDRequestID())
             session.setCorrelationID(UUID.randomUUID().toString());
 
         String moduleID = request.getHeader(HttpHeaders.MODULE_ID.value());
@@ -64,6 +68,14 @@ public class GenerateAppSessionAspect implements Ordered{
             else
                 session.setToken(authToken);
         }
+
+        String userID = request.getHeader(HttpHeaders.USER_ID.value());
+        if(userID != null && !userID.trim().isEmpty())
+            session.setUserID(userID);
+
+        String username = request.getHeader(HttpHeaders.USER_NAME.value());
+        if(username != null && !username.trim().isEmpty())
+            session.setUsername(username);
 
         request.setAttribute(AppSession.REST_SESSION, session);
     }

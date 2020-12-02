@@ -2,6 +2,7 @@ package com.am.libraries.logger.controller;
 
 import com.am.libraries.logger.model.Data;
 import com.am.libraries.logger.model.ResponseData;
+import com.am.libraries.logger.model.data.AppSession;
 import com.am.libraries.logger.services.TestLoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -99,6 +100,18 @@ public class TestLoggerController {
                                        @RequestParam String param2) {
         String result = this.service.testLogArguments(param1, param2);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(value = "/log/headers", produces = {MediaType.TEXT_PLAIN_VALUE})
+    public ResponseEntity logHeaders() {
+        this.service.logHeaders();
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/log/appSession", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<AppSession> getAppSession() {
+        AppSession session = this.service.getAppSession();
+        return ResponseEntity.ok(session);
     }
 
 }

@@ -16,6 +16,9 @@ public class LoggerConfigManager {
     @Value("${aml.logger.logRESTRequests:#{false}}")
     private Boolean logRESTRequests;
 
+    @Value("${aml.logger.appSession.generate.uuidRequestID-inCaseNotProvided:#{true}}")
+    private Boolean generateUUIDRequestID;
+
     public Boolean getIsUseDefaultLogger() {
         return useDefaultLogger;
     }
@@ -33,8 +36,14 @@ public class LoggerConfigManager {
     public Boolean getLogRESTRequests() {
         return logRESTRequests;
     }
-
     public void setLogRESTRequests(Boolean logRESTRequests) {
         this.logRESTRequests = logRESTRequests;
+    }
+
+    public Boolean getGenerateUUIDRequestID() {
+        return generateUUIDRequestID;
+    }
+    public void setGenerateUUIDRequestID(Boolean generateUUIDRequestID) {
+        this.generateUUIDRequestID = generateUUIDRequestID;
     }
 }
