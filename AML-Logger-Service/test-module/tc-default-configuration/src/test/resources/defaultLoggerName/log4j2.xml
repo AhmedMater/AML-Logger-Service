@@ -1,6 +1,6 @@
 <Configuration status="INFO">
     <Properties>
-        <Property name="DEFAULT_LOG_NAME">Service12</Property>
+        <Property name="DEFAULT_LOG_NAME">Another</Property>
         <Property name="LOGS_PATH">../logs</Property>
         <Property name="LOG_FILE_SIZE">10 MB</Property>
         <Property name="LOG_PATTERN">[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5p] [%t] %m %n</Property>

@@ -1,19 +1,11 @@
-package com.giza.libraries.test.properties.defaultConfiguration;
+package com.giza.libraries.test.properties.generateReqID.trueValue;
 
 import com.am.libraries.logger.DefaultLoggerApplication;
-import com.giza.libraries.common.AbstractTest;
-import com.giza.libraries.common.HttpHeaders;
 import com.giza.libraries.test.properties.common.AbstractRESTHeadersInLogPrefix;
-import org.junit.Assert;
-import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MvcResult;
 
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-
-@SpringBootTest(classes = DefaultLoggerApplication.class)
+@SpringBootTest(classes = DefaultLoggerApplication.class,
+        properties = {"aml.logger.appSession.generate.uuidRequestID-inCaseNotProvided=true"})
 public class RESTHeadersInLogPrefixTestCases extends AbstractRESTHeadersInLogPrefix {
 
     @Override

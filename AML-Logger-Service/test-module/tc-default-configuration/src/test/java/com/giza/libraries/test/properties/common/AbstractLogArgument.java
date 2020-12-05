@@ -1,26 +1,25 @@
-package com.giza.libraries.test;
+package com.giza.libraries.test.properties.common;
 
-import com.am.libraries.logger.DefaultLoggerApplication;
 import com.giza.libraries.common.AbstractTest;
-import com.giza.libraries.common.HttpHeaders;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.util.Collections;
-import java.util.Map;
 
-@SpringBootTest(classes = DefaultLoggerApplication.class)
-public class LogArgumentTestCases extends AbstractTest {
+public abstract class AbstractLogArgument extends AbstractTest {
+    protected abstract void initLogFilePath();
+    protected abstract Boolean isRequestIDAutomaticallyGenerated();
 
     @Test
     public void testLogArguments() throws Exception {
         super.setUp();
         String uri = "/logger/log/arguments";
+        this.initLogFilePath();
+
         MultiValueMap<String, String> queryParameters = new LinkedMultiValueMap<>();
         queryParameters.put("param1", Collections.singletonList("Ahmed"));
         queryParameters.put("param2", Collections.singletonList("Mater"));
@@ -29,7 +28,9 @@ public class LogArgumentTestCases extends AbstractTest {
         int status = mvcResult.getResponse().getStatus();
         Assert.assertEquals("REST Request isn't successfully", 200, status);
 
-        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] \\[[A-Za-z0-9\\-]+] " +
+        String reqID = this.isRequestIDAutomaticallyGenerated() ? "\\[[A-Za-z0-9\\-]+] " : "";
+
+        String logPrefix = "\\[[0-9\\-: .]+] \\[DEBUG] \\[main] \\[REST] " + reqID +
                 "\\[com\\.am\\.libraries\\.logger\\.services\\.TestLoggerService\\.testLogArguments\\(\\)] ";
 
         String multiArgsLogLineStr = logPrefix + "\\[Argument 3: Ahmed Mater] \\[Argument 4: Ahmed-Mater] \\[Argument 5: Ahmed_Mater]";

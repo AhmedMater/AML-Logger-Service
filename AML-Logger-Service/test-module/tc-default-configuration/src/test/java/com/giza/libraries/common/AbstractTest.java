@@ -41,7 +41,7 @@ public abstract class AbstractTest {
         return headers;
     }
 
-    protected String LOG_FILE_PATH = "../logs/Service.log";
+    protected String LOG_FILE_PATH;
 
     protected void readLogFile(){
         File logFile = new File(LOG_FILE_PATH);
@@ -93,9 +93,9 @@ public abstract class AbstractTest {
         }
 
         // Clear the File for the next Test Case
-        PrintWriter writer = new PrintWriter(LOG_FILE_PATH);
-        writer.print("");
-        writer.close();
+//        PrintWriter writer = new PrintWriter(LOG_FILE_PATH);
+//        writer.print("");
+//        writer.close();
 
         if(!found)
             Assert.fail(assertErrorMessage);
