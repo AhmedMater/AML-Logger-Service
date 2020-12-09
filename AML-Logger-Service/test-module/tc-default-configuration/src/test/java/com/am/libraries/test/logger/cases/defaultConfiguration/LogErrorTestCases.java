@@ -1,10 +1,12 @@
 package com.am.libraries.test.logger.cases.defaultConfiguration;
 
+import com.am.libraries.logger.configuration.EnableLogging;
 import com.am.libraries.logger.test.DefaultLoggerApplication;
 import com.am.libraries.test.logger.abstractCases.AbstractLogError;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = DefaultLoggerApplication.class)
+@EnableLogging
 public class LogErrorTestCases extends AbstractLogError {
 
     @Override
