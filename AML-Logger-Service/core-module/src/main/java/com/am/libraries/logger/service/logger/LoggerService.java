@@ -7,12 +7,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoggerService extends RESTLogger {
-//    private LoggerConfigManager loggerConfigManager;
 
     @Autowired
     public LoggerService(LoggerConfigManager loggerConfigManager) {
         super(loggerConfigManager.getDefaultLoggerName());
-//        this.loggerConfigManager = loggerConfigManager;
     }
 
     @Override

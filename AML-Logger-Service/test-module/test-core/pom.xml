@@ -9,15 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tc-default-configuration</artifactId>
+    <artifactId>test-core</artifactId>
 
-    <dependencies>
 
-        <dependency>
-            <groupId>com.am.libraries</groupId>
-            <artifactId>test-core</artifactId>
-            <version>1.0</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>
