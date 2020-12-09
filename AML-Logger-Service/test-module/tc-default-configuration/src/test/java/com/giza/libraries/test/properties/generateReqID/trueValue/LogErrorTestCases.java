@@ -1,7 +1,7 @@
 package com.giza.libraries.test.properties.generateReqID.trueValue;
 
 import com.am.libraries.logger.DefaultLoggerApplication;
-import com.giza.libraries.test.properties.common.AbstractLogError;
+import com.giza.libraries.test.common.AbstractLogError;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = DefaultLoggerApplication.class)

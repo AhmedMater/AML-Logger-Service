@@ -1,7 +1,7 @@
 package com.giza.libraries.test.properties.defaultConfiguration;
 
 import com.am.libraries.logger.DefaultLoggerApplication;
-import com.giza.libraries.test.properties.common.AbstractLogFnInputOutputAspect;
+import com.giza.libraries.test.common.AbstractLogFnInputOutputAspect;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = DefaultLoggerApplication.class)
