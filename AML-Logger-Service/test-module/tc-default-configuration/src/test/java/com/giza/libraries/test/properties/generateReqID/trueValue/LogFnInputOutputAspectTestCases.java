@@ -1,11 +1,11 @@
-package com.giza.libraries.test.properties.defaultConfiguration;
+package com.giza.libraries.test.properties.generateReqID.trueValue;
 
 import com.am.libraries.logger.DefaultLoggerApplication;
-import com.giza.libraries.test.properties.common.AbstractLogInfo;
+import com.giza.libraries.test.properties.common.AbstractLogFnInputOutputAspect;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = DefaultLoggerApplication.class)
-public class LogInfoTestCases extends AbstractLogInfo {
+public class LogFnInputOutputAspectTestCases extends AbstractLogFnInputOutputAspect {
 
     @Override
     protected void initLogFilePath() {

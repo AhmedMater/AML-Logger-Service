@@ -128,6 +128,10 @@ public abstract class AbstractTest {
         return this.prepareGETRequest(url, new HashMap<>(), contentType, queryParameters);
     }
 
+    protected MvcResult prepareGETRequest(String url, MediaType contentType) throws Exception {
+        return this.prepareGETRequest(url, new HashMap<>(), contentType, new LinkedMultiValueMap<>());
+    }
+
     protected MvcResult prepareGETRequest(String url, Map<String, String> headers) throws Exception {
         return this.prepareGETRequest(url, headers, null, new LinkedMultiValueMap<>());
     }

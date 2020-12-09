@@ -1,4 +1,4 @@
-package com.giza.libraries.test.properties.defaultConfiguration;
+package com.giza.libraries.test.properties.generateReqID.falseValue;
 
 import com.am.libraries.logger.DefaultLoggerApplication;
 import com.giza.libraries.test.properties.common.AbstractLogInfo;
@@ -14,6 +14,6 @@ public class LogInfoTestCases extends AbstractLogInfo {
 
     @Override
     protected Boolean isRequestIDAutomaticallyGenerated() {
-        return true;
+        return false;
     }
 }

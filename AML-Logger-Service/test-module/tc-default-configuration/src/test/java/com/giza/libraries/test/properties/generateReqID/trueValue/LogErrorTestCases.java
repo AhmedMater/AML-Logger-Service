@@ -1,11 +1,11 @@
-package com.giza.libraries.test.properties.defaultConfiguration;
+package com.giza.libraries.test.properties.generateReqID.trueValue;
 
 import com.am.libraries.logger.DefaultLoggerApplication;
-import com.giza.libraries.test.properties.common.AbstractLogInfo;
+import com.giza.libraries.test.properties.common.AbstractLogError;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = DefaultLoggerApplication.class)
-public class LogInfoTestCases extends AbstractLogInfo {
+public class LogErrorTestCases extends AbstractLogError {
 
     @Override
     protected void initLogFilePath() {
